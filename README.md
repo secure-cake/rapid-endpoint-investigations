@@ -17,4 +17,22 @@ Other Requirements:
     -  PowerShell 7.x
     -  S3 with user/IAM policies, if desired for Velociraptor Offline Collector Upload (notes coming soon!)
     -  Microsoft Excel
+    
+---------------
+# High-Level Workflow Steps
+
+Acquire Artifacts {point of impact} - Using Velociraptor Offline Collector
+
+Analyze Artifacts {start from event context} - Using KAPE and Invoke-KAPE to parse
+
+Identify IOCs {m...i...n...d} - Filter out "normal" & focus on meaningful impact (Memory-Identity-Network-Disk)
+
+Expand Context {find attack extents}
+
+Contain {from attack extents}
+
+
+NOTE: See the "Incident Response Capabilities Matrix Model" for more details - https://securecake.com/f/incident-response-capabilities-matrix-model---preamble?blogcategory=IRCMM
+
+----------------
 

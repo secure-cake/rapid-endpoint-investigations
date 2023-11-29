@@ -36,3 +36,12 @@ NOTE: See the "Incident Response Capabilities Matrix Model" for more details - h
 
 ----------------
 
+# Velociraptor Offline Collector Configuration
+Download and execute current, stable version of Velocraptor (see link above for download and documentation): 
+>velociraptor-v0.7.0-4-windows-amd64.exe gui
+
+Click on "Server Artifacts" (left-hand flyout menu), "Build Offline Collector" (paper airplane icon), then search and "click to add" artifacts:
+ - Windows.Network.NetstatEnriched (NOTE: Change ProcessNameRegex to = “.”)
+ - Windows.System.Pslist
+ - Windows.KapeFiles.Targets (_KapeTriage)
+ - Windows.Sysinternals.Autoruns (optional! – can extract using KAPE from _KapeTriage if preferred)

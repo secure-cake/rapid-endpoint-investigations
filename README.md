@@ -19,7 +19,7 @@ Other Requirements:
     -  Microsoft Excel
     
 ---------------
-# High-Level Workflow Steps
+## High-Level Workflow Steps
 
 Acquire Artifacts {point of impact} - Using Velociraptor Offline Collector
 
@@ -36,12 +36,26 @@ NOTE: See the "Incident Response Capabilities Matrix Model" for more details - h
 
 ----------------
 
-# Velociraptor Offline Collector Configuration
+## Velociraptor Offline Collector Configuration
 Download and execute current, stable version of Velocraptor (see link above for download and documentation): 
 >velociraptor-v0.7.0-4-windows-amd64.exe gui
 
 Click on "Server Artifacts" (left-hand flyout menu), "Build Offline Collector" (paper airplane icon), then search and "click to add" artifacts:
  - Windows.Network.NetstatEnriched (NOTE: Change ProcessNameRegex to = “.”)
  - Windows.System.Pslist
- - Windows.KapeFiles.Targets (_KapeTriage)
- - Windows.Sysinternals.Autoruns (optional! – can extract using KAPE from _KapeTriage if preferred)
+ - Windows.KapeFiles.Targets (NOTE: Select "_KapeTriage")
+ - Windows.Sysinternals.Autoruns
+
+Configure "Collection:"
+ - Collection Type: **ZIP**
+     - Output Format: CSV and JSON
+     - Pause for Prompt: Check
+     - Filename Format: (I usually clear "Collection" for brevity)
+-  Collection Type: **AWS Bucket** (See NOTES below)
+  -  S3 Bucket: your-triage-upload-bucket-name (no "/")
+  -  Credentials Key: copy/paste your AWS IAM Access Key here (remove any trailing space!)
+  -  Credentials Secret: copy/paste your AWS IAM Secret Key here (remove any trailing space!)
+  -  Region: us-east-1 (edit according to your desired region)
+  -  File Name Prefix: your-case-specific-folder-name/ (include trailing "/")
+  -  Output Format: CSV and JSON
+  -  Pause for Prompt: Check

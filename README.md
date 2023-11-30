@@ -59,3 +59,31 @@ Configure "Collection:"
   -  File Name Prefix: your-case-specific-folder-name/ (include trailing "/")
   -  Output Format: CSV and JSON
   -  Pause for Prompt: Check
+
+## AWS Collection Upload Configuration: 
+If you want to use automatic upload to S3 for your Velociraptor Offline Collector, configure the following: 
+-  S3 Bucket: I create a "triage upload" bucket and then create a "sub-folder:"
+  -  Bucket: your-company-dfir-uploads (Use SSE, do not specify Key)
+  -  Folder in Bucket: 2023-11-case-xyz
+-  IAM Console:
+  -  Create a User: Users\Create User\2023-11-case-xyz (I name the User based on the "case")
+  -  Create Inline Policy: Click user (2023-11-case-xyz"), Add Permissions, Create Inline Policy, JSON (copy/paste policy below, changing SID and bucket/folder names:
+```
+{ 
+    "Version": "2012-10-17", 
+    "Statement": [ 
+      { 
+        "Sid": "yourcompanyuploadonly", 
+        "Effect": "Allow", 
+        "Action": [ 
+          "s3:PutObject" 
+        ], 
+        "Resource": [ 
+            "arn:aws:s3:::your-company-dfir-uploads/2023-11-case-xyz", 
+            "arn:aws:s3::: your-company-dfir-uploads/2023-11-case-xyz /*" 
+        ] 
+      } 
+  ] 
+} 
+```
+**IMPORTANT:** The IAM Keys are easily extracted from the VR Offline Collector, so make certain the policy is narrow and applies ONLY to the "triage" bucket/folder

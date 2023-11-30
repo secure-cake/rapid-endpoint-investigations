@@ -70,8 +70,8 @@ If you want to use automatic upload to S3 for your Velociraptor Offline Collecto
   -  Bucket: your-company-dfir-uploads (Use SSE, do not specify Key)
   -  Folder in Bucket: 2023-11-case-xyz
 -  IAM Console:
-  -  Create a User: Users\Create User\2023-11-case-xyz (I name the User based on the "case")
-  -  Create Inline Policy: Click user (2023-11-case-xyz"), Add Permissions, Create Inline Policy, JSON (copy/paste policy below, changing SID and bucket/folder names:
+   -  Create a User: Users\Create User\2023-11-case-xyz (I name the User based on the "case")
+   -  Create Inline Policy: Click user (2023-11-case-xyz"), Add Permissions, Create Inline Policy, JSON (copy/paste policy below, changing SID and bucket/folder names:
 ```
 { 
     "Version": "2012-10-17", 

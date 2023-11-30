@@ -138,3 +138,18 @@ Upon completion, you should have three directories, one CSV file and one XLSX fi
 -  eg D:\cases\2023-11-1-abc\kape_output\Workstation01-mft-filelisting (processed MFT files)
 -  eg D:\cases\2023-11-1-abc\kape_output\Workstation01\Workstation01-mft_filelisting_executable_files.csv (MFT filtered on specified File Extensions)
 -  eg D:\cases\2023-11-1-abc\kape_output\Workstation01\Workstation01-web-and-exe.evtx.xlsx (combined output from "triage" EVTX, Hayabusa, Web and Execution artifacts)
+
+NOTE: You'll 
+--------------
+## Find Evil!
+You have some context already or you wouldn't be here, doing this! Start with that: date/timestamp, process name, user account, filename, etc. 
+This process is designed for expedient, actionable intelligence, not minutae! I'd start with:
+-  The "-web-and-exe-evtx.xslx" workbok and with Hayabusa "high/critical" findings
+-  Check "Nestat Enriched" and "PSList" (NOTE: these are located in the ..\triage_data\Workstation01\results folder)
+-  After that, I'll usually pivto to MFT file listing, looking for files of interest based on "date/timestamp" (noted below)
+
+Once you identify a date/timestamp, use that intelligence to narrow your review of other artifacts:
+-  Start with "concurrent" (what happened at or about the same time?)
+-  Expand your date/timestamp scope to look for "antecedent" indicators (what happend right after?)
+-  Expand your date/timestamp scope to look for "precedent" indicators (what happend right before?)
+-  Take whatever "clues" (aka IOC's) and search for "attack extents" (the end of indicators on the endpoint, other endpoints, all endpoints in your environment)

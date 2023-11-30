@@ -105,3 +105,36 @@ Copy the offline collector executable to the system/s you are investigating. If 
 If you chose "AWS Bucket" collector, a log file will be created in the directory where the collector is saved and a ZIP file will be uploaded to your Bucket and saved in the diretory where the collector was saved/executed. "Press the Enter Key to end."
 
 **IMPORTANT:** Run the collector as ADMINISTRATOR 
+
+----------------
+
+## Using KAPE and Invoke-KAPE to Parse Offline Triage Collection
+Stage your ZIP file/s and edit the Kape_Rapid_Triage_Excel_Rev2.ps1 script to match your drive and folder structure:
+
+I use an EC2 Windows 2022 instance, creating an OS Volume (C: - 120 GB) and a Case/Data Volume (D: - 1 to 2 TB, mostly for IOPs but also to accommodate numerous collections).
+I'll then create a "case folder," eg D:\cases\2023-11-1-abc, with a "triage_data" subdirectory, and copy one or more ZIP files into that subdirectory. 
+You can manually unzip the ZIP files, if there are only one or two, or you can use the "expand-archive-triage-data-rev3.ps1" script (requires PoSh 7.x) to unzip all ZIP files in your "triage_data" folder, automatically creating unique subfolders for each ZIP-file output. 
+
+NOTE: I store all of my tools on the OS Volume (C:\Tools\..) and then delete and re-create the Case/Data Volume for each Case. 
+
+Next, review the Kape_Rapid_Triage_Excel_Rev2.ps1 script and change variables to match your setup:
+NOTE: I use Visual Studio Code to open/edit/run the Script
+  1.  In your Terminal, navigate to the directory where you installed KAPE ("Invoke-Kape.ps1" should be in the same directory):
+      - eg C:\Tools\KAPE
+  2.  Edit the case directory variables:
+      - $casename = '2023-11-1-abc'
+      - $triage_data_directory = "D:\cases\$casename\triage_data"
+      - $kape_destination_directory = "D:\cases\$casename\kape_output"
+  3.  Edit the EVTX triage variables:
+      - $startdate = '2023-11-01'
+      - $includedevents = (add/delete as desired!)
+      - $csvf = (this is the output file name, change as desired)
+  4.  Edit the MFT File Listing file extensions, as desired (line 29):
+      - Example - Add file extension: ...ps1") -or ($_.Extension -eq ".7z")}
+  5.  Run the script!
+Upon completion, you should have three directories, one CSV file and one XLSX file for each Triage Collection under your Case Folder\kape_output:
+-  eg D:\cases\2023-11-1-abc\kape_output\Workstation01 (original ZIP collection files)
+-  eg D:\cases\2023-11-1-abc\kape_output\Workstation01-evtx (processed EVTX files)
+-  eg D:\cases\2023-11-1-abc\kape_output\Workstation01-mft-filelisting (processed MFT files)
+-  eg D:\cases\2023-11-1-abc\kape_output\Workstation01\Workstation01-mft_filelisting_executable_files.csv (MFT filtered on specified File Extensions)
+-  eg D:\cases\2023-11-1-abc\kape_output\Workstation01\Workstation01-web-and-exe.evtx.xlsx (combined output from "triage" EVTX, Hayabusa, Web and Execution artifacts)

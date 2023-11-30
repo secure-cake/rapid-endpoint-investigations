@@ -62,7 +62,7 @@ Configure "Collection:"
 -  Launch/Download Collector:
    -  Click "Server.Utils.CreateCollector, Uploaded Files," then click "Collector_velociraptor-vn.n.n-windows-amd64.exe"
    -  If you receive browser warnings, "keep" and download
-   -  Rename collector descriptively, eg "offline-triage-collector-win-x64.exe"
+   -  Rename collector descriptively, eg "case-xyz-offline-collector-win-x64.exe"
 
 ## AWS Collection Upload Configuration: 
 If you want to use automatic upload to S3 for your Velociraptor Offline Collector, configure the following: 

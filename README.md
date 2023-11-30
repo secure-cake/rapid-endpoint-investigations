@@ -138,9 +138,9 @@ Upon completion, you should have three directories, one CSV file and one XLSX fi
 -  eg D:\cases\2023-11-1-abc\kape_output\Workstation01-mft-filelisting (processed MFT files)
 -  eg D:\cases\2023-11-1-abc\kape_output\Workstation01\Workstation01-mft_filelisting_executable_files.csv (MFT filtered on specified File Extensions)
 -  eg D:\cases\2023-11-1-abc\kape_output\Workstation01\Workstation01-web-and-exe.evtx.xlsx (combined output from "triage" EVTX, Hayabusa, Web and Execution artifacts)
+  
+NOTE: Don't forget you have some pre-extracted/parsed data in the D:\cases\2023-11-1-abc\triage_data\Workstation01\results folder (Autoruns, Netstat, PSlist)
 
-NOTE: You'll 
---------------
 ## Find Evil!
 You have some context already or you wouldn't be here, doing this! Start with that: date/timestamp, process name, user account, filename, etc. 
 This process is designed for expedient, actionable intelligence, not minutae! I'd start with:
@@ -153,3 +153,5 @@ Once you identify a date/timestamp, use that intelligence to narrow your review 
 -  Expand your date/timestamp scope to look for "antecedent" indicators (what happend right after?)
 -  Expand your date/timestamp scope to look for "precedent" indicators (what happend right before?)
 -  Take whatever "clues" (aka IOC's) and search for "attack extents" (the end of indicators on the endpoint, other endpoints, all endpoints in your environment)
+
+**NOTE:** Don't forget that you have the unfiltered versions of parsed EVTX and MFT available for follow-up/deeper analysis (D:\cases\2023-11-1-abc\kape_output\Workstation01-mft-filelisting\Filesystem ... and Workstation01-evtx\EventLogs)

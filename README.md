@@ -59,6 +59,10 @@ Configure "Collection:"
   -  File Name Prefix: your-case-specific-folder-name/ (include trailing "/")
   -  Output Format: CSV and JSON
   -  Pause for Prompt: Check
+-  Launch/Download Collector:
+  -  Click "Server.Utils.CreateCollector, Uploaded Files," then click "Collector_velociraptor-vn.n.n-windows-amd64.exe"
+  -  If you receive browser warnings, "keep" and download
+  -  Rename collector descriptively, eg "offline-triage-collector-win-x64.exe"
 
 ## AWS Collection Upload Configuration: 
 If you want to use automatic upload to S3 for your Velociraptor Offline Collector, configure the following: 
@@ -86,4 +90,9 @@ If you want to use automatic upload to S3 for your Velociraptor Offline Collecto
   ] 
 } 
 ```
+- IAM Console (continued):
+  - Save Changes
+  - Click the "Security Credentials" tab, "Create Access Key," select "Application running outside AWS," Next, provide descriptive name tag
+  - Copy/paste Access Key and Secret Key (see "Collection Type: AWS Bucket" config above) [save/record securely as required]
+
 **IMPORTANT:** The IAM Keys are easily extracted from the VR Offline Collector, so make certain the policy is narrow and applies ONLY to the "triage" bucket/folder

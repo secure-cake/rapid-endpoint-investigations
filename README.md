@@ -100,8 +100,8 @@ If you want to use automatic upload to S3 for your Velociraptor Offline Collecto
 ## Velociraptor Offline Collector Execution
 NOTE: I highly recommend you test your offline collector prior to deployment!
 
-Copy the offline collector executable to the system/s you are investigating. If you chose "ZIP" collection type, a ZIP file and log file will be created in the directory where the collector is saved.
+Copy the offline collector executable to the system/s you are investigating. If you chose "ZIP" collection type, a ZIP file and log file will be created in the directory where the collector is saved. At completion, "Press the Enter Key to end."
 
-If you chose "AWS Bucket" collector, a log file will be created in the directory where the collector is saved and a ZIP file will be uploaded to your Bucket. If upload fails, ZIP file will be located in the diretory where the collector was saved.
+If you chose "AWS Bucket" collector, a log file will be created in the directory where the collector is saved and a ZIP file will be uploaded to your Bucket and saved in the diretory where the collector was saved/executed. "Press the Enter Key to end."
 
 **IMPORTANT:** Run the collector as ADMINISTRATOR 

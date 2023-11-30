@@ -9,6 +9,9 @@ Executables for KAPE Modules (download and copy to KAPE\Modules\bin\):
   -  ObsidianForensics Hindsight: https://github.com/obsidianforensics/hindsight (..\modules\bin\hindsight.exe)
   -  Hayabusa: https://github.com/Yamato-Security/hayabusa/releases (..\modules\bin\hayabusa\)
 
+Custom EvtxECmd Module:
+  -  Download !EvtxECmd.mkape from this repo, save to your KAPE\Modules\EZTools\EvtxECmd directory
+
 Documentation References:
  - Velociraptor: https://docs.velociraptor.app/blog/2023/2023-07-27-release-notes-0.7.0/
  - KAPE: https://ericzimmerman.github.io/KapeDocs/#!index.md

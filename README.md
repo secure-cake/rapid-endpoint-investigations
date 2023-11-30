@@ -51,7 +51,7 @@ Configure "Collection:"
      - Output Format: CSV and JSON
      - Pause for Prompt: Check
      - Filename Format: (I usually clear "Collection" for brevity)
--  Collection Type: **AWS Bucket** (See NOTES below)
+-  Collection Type: **AWS Bucket** (See "AWS Collection Upload Configuration" NOTES below)
    -  S3 Bucket: your-triage-upload-bucket-name (no "/")
    -  Credentials Key: copy/paste your AWS IAM Access Key here (remove any trailing space!)
    -  Credentials Secret: copy/paste your AWS IAM Secret Key here (remove any trailing space!)

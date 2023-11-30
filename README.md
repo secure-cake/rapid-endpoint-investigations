@@ -52,17 +52,17 @@ Configure "Collection:"
      - Pause for Prompt: Check
      - Filename Format: (I usually clear "Collection" for brevity)
 -  Collection Type: **AWS Bucket** (See NOTES below)
-  -  S3 Bucket: your-triage-upload-bucket-name (no "/")
-  -  Credentials Key: copy/paste your AWS IAM Access Key here (remove any trailing space!)
-  -  Credentials Secret: copy/paste your AWS IAM Secret Key here (remove any trailing space!)
-  -  Region: us-east-1 (edit according to your desired region)
-  -  File Name Prefix: your-case-specific-folder-name/ (include trailing "/")
-  -  Output Format: CSV and JSON
-  -  Pause for Prompt: Check
+   -  S3 Bucket: your-triage-upload-bucket-name (no "/")
+   -  Credentials Key: copy/paste your AWS IAM Access Key here (remove any trailing space!)
+   -  Credentials Secret: copy/paste your AWS IAM Secret Key here (remove any trailing space!)
+   -  Region: us-east-1 (edit according to your desired region)
+   -  File Name Prefix: your-case-specific-folder-name/ (include trailing "/")
+   -  Output Format: CSV and JSON
+   -  Pause for Prompt: Check
 -  Launch/Download Collector:
-  -  Click "Server.Utils.CreateCollector, Uploaded Files," then click "Collector_velociraptor-vn.n.n-windows-amd64.exe"
-  -  If you receive browser warnings, "keep" and download
-  -  Rename collector descriptively, eg "offline-triage-collector-win-x64.exe"
+   -  Click "Server.Utils.CreateCollector, Uploaded Files," then click "Collector_velociraptor-vn.n.n-windows-amd64.exe"
+   -  If you receive browser warnings, "keep" and download
+   -  Rename collector descriptively, eg "offline-triage-collector-win-x64.exe"
 
 ## AWS Collection Upload Configuration: 
 If you want to use automatic upload to S3 for your Velociraptor Offline Collector, configure the following: 
@@ -96,3 +96,4 @@ If you want to use automatic upload to S3 for your Velociraptor Offline Collecto
   - Copy/paste Access Key and Secret Key (see "Collection Type: AWS Bucket" config above) [save/record securely as required]
 
 **IMPORTANT:** The IAM Keys are easily extracted from the VR Offline Collector, so make certain the policy is narrow and applies ONLY to the "triage" bucket/folder
+

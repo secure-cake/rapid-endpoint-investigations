@@ -5,9 +5,10 @@ First, acquire and stage the tooling:
 -  KAPE (register, download, support the project!): https://www.kroll.com/en/insights/publications/cyber/kroll-artifact-parser-extractor-kape
 
 Executables for KAPE Modules (download and copy to KAPE\Modules\bin\):
-  -  NirSoft BrowsingHistoryView & WebBrowserDownloads: https://www.nirsoft.net/ (..\modules\bin\browsinghistoryview.exe - browserdownloadsview.exe)
-  -  ObsidianForensics Hindsight: https://github.com/obsidianforensics/hindsight (..\modules\bin\hindsight.exe)
-  -  Hayabusa: https://github.com/Yamato-Security/hayabusa/releases (..\modules\bin\hayabusa\)
+  -  NirSoft BrowsingHistoryView: https://www.nirsoft.net/utils/browsing_history_view.html (SAVE TO: ..KAPE\modules\bin\browsinghistoryview.exe
+  -  NirSoft Browser Downloads View: https://www.nirsoft.net/utils/web_browser_downloads_view.html (SAVE TO: ..KAPE\modules\bin\browserdownloadsview.exe)
+  -  ObsidianForensics Hindsight: https://github.com/obsidianforensics/hindsight (SAVE TO: ..KAPE\modules\bin\hindsight.exe)
+  -  Hayabusa: https://github.com/Yamato-Security/hayabusa/releases (Install Hayabusa, then COPY all of the installation-directory contents to a "hayabusa" directory: ..KAPE\modules\bin\hayabusa\)
 
 Custom EvtxECmd Module:
   -  Download !EvtxECmd.mkape from this repo, save to your KAPE\Modules\EZTools\EvtxECmd directory

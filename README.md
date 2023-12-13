@@ -9,6 +9,7 @@ Executables for KAPE Modules (download and copy to KAPE\Modules\bin\):
   -  NirSoft Browser Downloads View: https://www.nirsoft.net/utils/web_browser_downloads_view.html (SAVE TO: ..KAPE\modules\bin\browserdownloadsview.exe)
   -  ObsidianForensics Hindsight: https://github.com/obsidianforensics/hindsight (SAVE TO: ..KAPE\modules\bin\hindsight.exe)
   -  Hayabusa: https://github.com/Yamato-Security/hayabusa/releases (Install/Unzip Hayabusa, then COPY all of the installation-directory contents to a "hayabusa" directory AND rename the hayabusa-2.x.x-win-x64.exe to "hayabusa.exe": ..KAPE\modules\bin\hayabusa\)
+  -  NOTE: You will need to run the !!ToolSync module (now included in the rapid triage script) or launch Gkape and click the "sync with github" button at the bottom before running the script!
 
 Custom EvtxECmd Module:
   -  Download !EvtxECmd.mkape from this repo, save to your KAPE\Modules\EZTools\EvtxECmd directory

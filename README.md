@@ -8,7 +8,7 @@ Executables for KAPE Modules (download and copy to KAPE\Modules\bin\):
   -  NirSoft BrowsingHistoryView: https://www.nirsoft.net/utils/browsing_history_view.html (SAVE TO: ..KAPE\modules\bin\browsinghistoryview.exe
   -  NirSoft Browser Downloads View: https://www.nirsoft.net/utils/web_browser_downloads_view.html (SAVE TO: ..KAPE\modules\bin\browserdownloadsview.exe)
   -  ObsidianForensics Hindsight: https://github.com/obsidianforensics/hindsight (SAVE TO: ..KAPE\modules\bin\hindsight.exe)
-  -  Hayabusa: https://github.com/Yamato-Security/hayabusa/releases (Install Hayabusa, then COPY all of the installation-directory contents to a "hayabusa" directory: ..KAPE\modules\bin\hayabusa\)
+  -  Hayabusa: https://github.com/Yamato-Security/hayabusa/releases (Install/Unzip Hayabusa, then COPY all of the installation-directory contents to a "hayabusa" directory AND rename the hayabusa-2.x.x-win-x64.exe to "hayabusa.exe": ..KAPE\modules\bin\hayabusa\)
 
 Custom EvtxECmd Module:
   -  Download !EvtxECmd.mkape from this repo, save to your KAPE\Modules\EZTools\EvtxECmd directory

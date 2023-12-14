@@ -4,7 +4,7 @@ cd C:\tools\KAPE
 #invoke-kape script must be in the kape diretory
 . .\Invoke-Kape.ps1
 
-#YOU DO NOT HAVE TO RUN THIS EVERY TIME, but you do need to run it once before executing this script to update maps, batch files, targets and modules; adjust --msource to point to your KAPE directory
+#You DO NEED TO RUN THIS ONCE before executing this script. Unfortunately, it deletes the !EvtxECmd-Triage.mkape custom module exists after executing ToolSync; customize directories below as needed
 Invoke-Kape -Module '!!ToolSync' --msource c:\tools\kape --mdest c:\temp
 
 #change three variables below for casename, triage dir and output dir

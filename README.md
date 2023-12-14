@@ -13,7 +13,7 @@ Executables for KAPE Modules (download and copy to KAPE\Modules\bin\):
 
 Custom EvtxECmd Module:
 NOTE: I am having trouble retaining this custom module. Tool sync for KAPE deletes it, even when stored in the !Local folder. So, run !!ToolSync once before rapid-endpoint script execution, then download/save the !EvtxECmd-Triage.mkape module, and things should work!
-  -  Download !EvtxECmd.mkape from this repo, save to your KAPE\Modules\EZTools\EvtxECmd directory
+  -  Download !EvtxECmd.mkape from this repo, save to your KAPE\Modules\!Local directory
 
 Documentation References:
  - Velociraptor: https://docs.velociraptor.app/blog/2023/2023-07-27-release-notes-0.7.0/

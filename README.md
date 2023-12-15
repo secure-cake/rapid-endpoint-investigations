@@ -12,7 +12,8 @@ Executables for KAPE Modules (download and copy to KAPE\Modules\bin\):
   -  NOTE: You will need to run the !!ToolSync module (now included in the rapid triage script) or launch Gkape and click the "sync with github" button at the bottom before running the script!
 
 Custom EvtxECmd Module:
-NOTE: I failed to alter the module ID and have updated the !EvtxECmd-Triage.mkape module in this repo to address that issue!
+
+NOTE: I originally failed to alter the module ID and have updated the !EvtxECmd-Triage.mkape module in this repo to address that issue!
   -  Download !EvtxECmd.mkape from this repo, save to your KAPE\Modules\!Local directory
 
 Documentation References:

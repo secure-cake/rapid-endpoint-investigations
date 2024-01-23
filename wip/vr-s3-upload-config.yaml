@@ -1,0 +1,223 @@
+autoexec:
+  argv:
+  - artifacts
+  - collect
+  - Collector
+  - --logfile
+  - collector-s3-upload-windows-amd64.exe.log
+  - -v
+  - --require_admin
+  artifact_definitions:
+  - name: Collector
+    parameters:
+    - name: Artifacts
+      default: |-
+        [
+         "Windows.KapeFiles.Targets",
+         "Windows.Network.NetstatEnriched",
+         "Windows.System.Pslist"
+        ]
+      type: json_array
+    - name: Parameters
+      default: |-
+        {
+         "Windows.KapeFiles.Targets": {
+          "_KapeTriage": "Y"
+         },
+         "Windows.Network.NetstatEnriched": {
+          "ProcessNameRegex": "."
+         }
+        }
+      type: json
+    - name: encryption_scheme
+      default: None
+    - name: encryption_args
+      default: |-
+        {
+         "public_key": "",
+         "password": ""
+        }
+      type: json
+    - name: Level
+      default: "5"
+      type: int
+    - name: Format
+      default: csv
+    - name: OutputPrefix
+    - name: FilenameTemplate
+      default: '%FQDN%-%TIMESTAMP%'
+    - name: CpuLimit
+      default: "0"
+      type: int
+    - name: ProgressTimeout
+      default: "0"
+      type: int
+    - name: Timeout
+      default: "0"
+      type: int
+    - name: target_args
+      default: |-
+        {
+         "bucket": "your-triage-uploads",
+         "GCSKey": "",
+         "credentialsKey": "CREDENTIALSKEY",
+         "credentialsSecret": "CREDENTIALSSECRET",
+         "region": "us-east-1",
+         "endpoint": "",
+         "serverSideEncryption": "",
+         "kmsEncryptionKey": "",
+         "s3UploadRoot": "CUSTOMERDIR/",
+         "sas_url": ""
+        }
+      type: json
+    sources:
+    - query: |
+        // A utility function to upload the file.
+        LET upload_file(filename, name, accessor) = upload_s3(
+            file=filename,
+            accessor=accessor,
+            bucket=TargetArgs.bucket,
+            name=name,
+            credentialskey=TargetArgs.credentialsKey,
+            credentialssecret=TargetArgs.credentialsSecret,
+            region=TargetArgs.region,
+            endpoint=TargetArgs.endpoint,
+            serversideencryption=TargetArgs.serverSideEncryption,
+            kmsencryptionkey=TargetArgs.kmsEncryptionKey,
+            s3uploadroot=TargetArgs.s3UploadRoot,
+            noverifycert=TargetArgs.noverifycert)
+        // Add all the tools we are going to use to the inventory.
+        LET _ <= SELECT inventory_add(tool=ToolName, hash=ExpectedHash)
+         FROM parse_csv(filename="/uploads/inventory.csv", accessor="me")
+         WHERE log(message="Adding tool " + ToolName)
+
+        LET baseline <= SELECT Fqdn, dirname(path=Exe) AS ExePath, Exe,
+           scope().CWD AS CWD FROM info()
+
+        LET OutputPrefix <= if(condition= OutputPrefix,
+          then=pathspec(parse=OutputPrefix),
+          else= if(condition= baseline[0].CWD,
+            then=pathspec(parse= baseline[0].CWD),
+            else=pathspec(parse= baseline[0].ExePath)))
+
+        LET _ <= log(message="Output Prefix : %v", args= OutputPrefix)
+
+        LET FormatMessage(Message) = regex_transform(
+            map=dict(`%FQDN%`=baseline[0].Fqdn,
+                     `%Timestamp%`=timestamp(epoch=now()).MarshalText),
+            source=Message)
+
+        // Format the filename safely according to the filename
+        // template. This will be the name uploaded to the bucket.
+        LET formatted_zip_name <= regex_replace(
+            source=expand(path=FormatMessage(Message=FilenameTemplate)),
+            re="[^0-9A-Za-z\\-]", replace="_") + ".zip"
+
+        // This is where we write the files on the endpoint.
+        LET zip_filename <= OutputPrefix + formatted_zip_name
+
+        // The log is always written to the executable path
+        LET log_filename <= pathspec(parse= baseline[0].Exe + ".log")
+
+        -- Make a random hex string as a random password
+        LET RandomPassword <= SELECT format(format="%02x",
+              args=rand(range=255)) AS A
+        FROM range(end=25)
+
+        LET pass = SELECT * FROM switch(a={
+
+           -- For X509 encryption we use a random session password.
+           SELECT join(array=RandomPassword.A) as Pass From scope()
+           WHERE encryption_scheme =~ "pgp|x509"
+            AND log(message="I will generate a container password using the %v scheme",
+                    args=encryption_scheme)
+
+        }, b={
+
+           -- Otherwise the user specified the password.
+           SELECT encryption_args.password as Pass FROM scope()
+           WHERE encryption_scheme =~ "password"
+
+        }, c={
+
+           -- No password specified.
+           SELECT Null as Pass FROM scope()
+        })
+
+        -- For X509 encryption_scheme, store the encrypted
+        -- password in the metadata file for later retrieval.
+        LET ContainerMetadata = if(
+            condition=encryption_args.public_key,
+            then=dict(
+               EncryptedPass=pk_encrypt(data=pass[0].Pass,
+                  public_key=encryption_args.public_key,
+               scheme=encryption_scheme),
+            Scheme=encryption_scheme,
+            PublicKey=encryption_args.public_key))
+        LET TargetArgs <= target_args
+
+        // When uploading to the cloud it is allowed to use directory //
+        // separators and we trust the filename template to be a valid
+        // filename.
+        LET upload_name <= regex_replace(
+            source=expand(path=FormatMessage(Message=FilenameTemplate)),
+            re="[^0-9A-Za-z\\-/]", replace="_")
+
+        LET _ <= log(message="Will collect package %v and upload to cloud bucket %v",
+           args=[zip_filename, TargetArgs.bucket])
+
+        LET Result <= SELECT
+            upload_file(filename=Container,
+                        name= upload_name + ".zip",
+                        accessor="file") AS Upload,
+            upload_file(filename=log_filename,
+                        name= upload_name + ".log",
+                        accessor="file") AS LogUpload
+
+        FROM collect(artifacts=Artifacts,
+            args=Parameters,
+            format=Format,
+            output=zip_filename,
+            cpu_limit=CpuLimit,
+            progress_timeout=ProgressTimeout,
+            timeout=Timeout,
+            password=pass[0].Pass,
+            level=Level,
+            metadata=ContainerMetadata)
+
+        LET _ <= if(condition=NOT Result[0].Upload.Path,
+           then=log(message="<red>Failed to upload to cloud bucket!</> Leaving the collection behind for manual upload!"),
+           else=log(message="<green>Collection Complete!</> Please remove %v when you are sure it was properly transferred", args=zip_filename))
+
+        SELECT * FROM Result
+  - name: Generic.Utils.FetchBinary
+    parameters:
+    - name: SleepDuration
+      default: "0"
+      type: int
+    - name: ToolName
+    - name: ToolInfo
+    - name: IsExecutable
+      default: "Y"
+      type: bool
+    sources:
+    - query: |
+        LET RequiredTool <= ToolName
+
+        LET matching_tools <= SELECT ToolName, Filename
+        FROM parse_csv(filename="/uploads/inventory.csv", accessor="me")
+        WHERE RequiredTool = ToolName
+
+        LET get_ext(filename) = parse_string_with_regex(
+              regex="(\\.[a-z0-9]+)$", string=filename).g1
+
+         LET FullPath <= if(condition=matching_tools,
+         then=copy(filename=matching_tools[0].Filename,
+              accessor="me", dest=tempfile(
+                  extension=get_ext(filename=matching_tools[0].Filename),
+                  remove_last=TRUE,
+                  permissions=if(condition=IsExecutable, then="x"))))
+
+        SELECT FullPath, FullPath AS OSPath,
+               Filename AS Name
+        FROM matching_tools

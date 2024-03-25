@@ -22,7 +22,7 @@ $csvf = "evtx-triage-output.csv"
     #Performs browser data, artifacts of execution, rolled up into Excel web-execution artifacts
     Invoke-Kape -msource $triage_data_directory\$_\uploads\auto\C%3A -mdest $kape_destination_directory\$_ -Module ObsidianForensics_Hindsight,NirSoft_BrowsingHistoryView,NirSoft_WebBrowserDownloads,AppCompatCacheParser,PECmd,AmcacheParser,SBECmd -mvars csv
     #Performs EVTX and Hayabusa Logon Summary EVTX processing...not rolled up into Excel
-    Invoke-Kape -msource $triage_data_directory\$_\uploads\auto\C%3A -mdest $kape_destination_directory\$_'-evtx' -Module EvtxECmd,haybausa_UpdateRules,hayabusa_OfflineLogonSummary -mvars csv
+    Invoke-Kape -msource $triage_data_directory\$_\uploads\auto\C%3A -mdest $kape_destination_directory\$_'-evtx' -Module EvtxECmd,hayabusa_UpdateRules,hayabusa_OfflineLogonSummary -mvars csv
     #Performs EVTX and Hayabusa Summary EVTX processing...rolled up into Excel
     Invoke-Kape -msource $triage_data_directory\$_\uploads\auto\C%3A -mdest $kape_destination_directory\$_ -Module hayabusa_OfflineEventLogs -mvars csv
     #Performs EVTX triage analysis based on date and event id, rolled up into Excel

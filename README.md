@@ -1,7 +1,7 @@
 # Rapid Windows Endpoint Investigations 
 Scripts and notes for performing rapid Windows endpoint "tactical triage" and investigations with Velociraptor and KAPE. 
 First, acquire and stage the tooling: 
--  Velociraptor (download): https://github.com/Velocidex/velociraptor/releases (tested with 0.7.4)
+-  Velociraptor (download): https://github.com/Velocidex/velociraptor/releases (tested with 0.73.1)
 -  KAPE (register, download, support the project!): https://www.kroll.com/en/insights/publications/cyber/kroll-artifact-parser-extractor-kape
 
 Executables for KAPE Modules (download and copy to KAPE\Modules\bin\):
@@ -17,7 +17,7 @@ NOTE: I originally failed to alter the module ID and have updated the !EvtxECmd-
   -  Download !EvtxECmd.mkape from this repo, save to your KAPE\Modules\!Local directory
 
 Documentation References:
- - Velociraptor: https://docs.velociraptor.app/blog/2023/2023-07-27-release-notes-0.7.0/
+ - Velociraptor: https://docs.velociraptor.app/blog/2024/2024-09-10-release-notes-0.73/
  - KAPE: https://ericzimmerman.github.io/KapeDocs/#!index.md
 
 Other Requirements:
@@ -52,6 +52,8 @@ Click on "Server Artifacts" (left-hand flyout menu), "Build Offline Collector" (
  - Windows.System.Pslist
  - Windows.KapeFiles.Targets (NOTE: Select "_KapeTriage")
  - Windows.Sysinternals.Autoruns
+ - Windows.System.Services
+ - Windows.System.DNSCache
 
 Configure "Collection:"
  - Collection Type: **ZIP**
@@ -137,22 +139,22 @@ NOTE: I use Visual Studio Code to open/edit/run the Script
       - $includedevents = (add/delete as desired!)
       - $csvf = (this is the output file name, change as desired)
   4.  Edit the MFT File Listing file extensions, as desired (line 29):
-      - Example - Add file extension: ...ps1") -or ($_.Extension -eq ".7z")}
+      - Example - Add file extension: ...ps1") -or ($_.Extension -eq ".7z")} [Recently UPDATED to add a few common malicious indicators.]
   5.  Run the script!
-Upon completion, you should have three directories, one CSV file and one XLSX file for each Triage Collection under your Case Folder\kape_output:
+Upon completion, you should have three directories, several CSV files and one XLSX file for each Triage Collection under your Case Folder\kape_output:
 -  eg D:\cases\2023-11-1-abc\kape_output\Workstation01 (original ZIP collection files)
 -  eg D:\cases\2023-11-1-abc\kape_output\Workstation01-evtx (processed EVTX files)
 -  eg D:\cases\2023-11-1-abc\kape_output\Workstation01-mft-filelisting (processed MFT files)
 -  eg D:\cases\2023-11-1-abc\kape_output\Workstation01\Workstation01-mft_filelisting_executable_files.csv (MFT filtered on specified File Extensions)
 -  eg D:\cases\2023-11-1-abc\kape_output\Workstation01\Workstation01-web-and-exe.evtx.xlsx (combined output from "triage" EVTX, Hayabusa, Web and Execution artifacts)
   
-NOTE: Don't forget you have some pre-extracted/parsed data in the D:\cases\2023-11-1-abc\triage_data\Workstation01\results folder (Autoruns, Netstat, PSlist)
+NOTE: You should have a CSV for several Velociraptor "parsed" artifacts for each Triage Collection (Autoruns, Netstat, PSlist, Services, DNSCache)
 
 ## Find Evil!
 You have some context already or you wouldn't be here, doing this! Start with that: date/timestamp, process name, user account, filename, etc. 
 This process is designed for expedient, actionable intelligence, not minutae! I'd start with:
 -  The "-web-and-exe-evtx.xslx" workbok and with Hayabusa "high/critical" findings
--  Check "Nestat Enriched" and "PSList" (NOTE: these are located in the ..\triage_data\Workstation01\results folder)
+-  Check "Nestat Enriched" and "PSList" (NOTE: these are NOW located in the kape_output folder, named for each Triage Collection/host)
 -  After that, I'll usually pivto to MFT file listing, looking for files of interest based on "date/timestamp" (noted below)
 
 Once you identify a date/timestamp, use that intelligence to narrow your review of other artifacts:

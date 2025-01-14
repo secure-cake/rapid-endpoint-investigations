@@ -1,0 +1,25 @@
+name: Windows.Hash.Executable.Files
+description: |
+IMPORTANT: If PowerShell script logging is enabled (not enabled by default!), this will likely stomp PowerShell EVTX audit logs. This artifact is designed to acquire SHA1 hash values and path/filenames for "executable" files (exe, bat, ps1, json, dll, vbs, cmd, scr) "recently" modified (days configurable) in the most common, user-writeable Windows directories, looking for "abnormal/malicious" executable content.
+
+required_permissions:
+  - EXECVE
+
+precondition:
+  SELECT OS From info() where OS = 'windows'
+
+parameters:
+  - name: DaysSinceModified
+    default: 5
+
+sources:
+  - query: |
+      LET BaseScript = '''$FormatEnumerationLimit=-1; $paths='c:\users','c:\programdata'; get-childitem -path $paths -Recurse -Force -ErrorAction SilentlyContinue | where {$_.LastWriteTime -gt (get-date).AddDays($DaysSinceModified)} | where {$_.extension -in ".exe",".bat",".ps1",".json",".dll",".vbs",".cmd",".scr"} | Get-FileHash -Algorithm sha1 -ErrorAction SilentlyContinue | ConvertTo-Json'''
+      LET PowershellScript <= join(array=['$DaysSinceModified=','"','-',DaysSinceModified,'"',";"," ",BaseScript])
+      SELECT * FROM foreach(
+        row={
+          SELECT Stdout FROM execve(argv=["Powershell", "-ExecutionPolicy",
+              "unrestricted", "-c", PowershellScript], length=1000000)
+        }, query={
+          SELECT * FROM parse_json_array(data=Stdout)
+      })

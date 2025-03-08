@@ -4,7 +4,7 @@ cd C:\tools\KAPE
 #invoke-kape script must be in the kape diretory
 . .\Invoke-Kape.ps1
 
-#This updates modules, maps, etc; customize directories below as needed
+#This updates modules, maps, etc; customize directories below as needed. You don't have to run this each time, just the first time and periodically thereafter. 
 Invoke-Kape -Module '!!ToolSync' --msource c:\tools\kape --mdest c:\temp
 
 #change three variables below for casename, triage dir and output dir
@@ -12,7 +12,7 @@ $casename = 'rtw_case'
 $triage_data_directory = "d:\cases\$casename\triage_data"
 $kape_destination_directory = "d:\cases\$casename\kape_output"
 
-#change the startdate below for evtx triage, change includedevents as desired - must create evtxecmd-triage kape module with variables to use
+#change the startdate below for evtx triage, change includedevents as desired - must create evtxecmd-triage kape module with variables to use...see read.me
 $startdate = '2024-11-1'
 $includedevents = '1102,1116,1117,4624,4625,4720,4722,4724,4738,5001,5007,7045,4104,4698'
 $csvf = "evtx-triage-output.csv"
@@ -49,7 +49,7 @@ $csvf = "evtx-triage-output.csv"
         $Everyexcel=$ExcelObject.Workbooks.Open($ExcelFile.FullName)
         $Everysheet=$Everyexcel.sheets.item(1)
         $Everysheet.Copy($Worksheet)
-    $Everyexcel.Close()
+    $Everyexcel.Close($False)
  
     }
 $Workbook.SaveAs("$kape_destination_directory\$_-web-and-exe-evtx.xlsx")

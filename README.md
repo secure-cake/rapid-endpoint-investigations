@@ -1,4 +1,8 @@
-# Rapid Windows Endpoint Investigations 
+## Linux Endpoint Investigation Components
+Velociraptor Offline Collector with CatScale for Linux walk-through: [HERE](https://github.com/secure-cake/malware-investigations/wiki/Velociraptor-Offline-Collector-with-CatScale-for-Linux)<br />
+Links to CatScale and UAC (Unix-Like Artifact Collector): [HERE](https://github.com/secure-cake/malware-investigations/wiki)
+
+## Rapid Windows Endpoint Investigations 
 Scripts and notes for performing rapid Windows endpoint "tactical triage" and investigations with Velociraptor and KAPE. 
 First, acquire and stage the tooling: 
 -  Velociraptor (download): https://github.com/Velocidex/velociraptor/releases (tested with 0.73.1)

@@ -15,6 +15,8 @@ Executables for KAPE Modules (download and copy to KAPE\Modules\bin\):
   -  Hayabusa: https://github.com/Yamato-Security/hayabusa/releases (Install/Unzip Hayabusa, then COPY all of the installation-directory contents to a "hayabusa" directory AND rename the hayabusa-2.x.x-win-x64.exe to "hayabusa.exe": ..KAPE\modules\bin\hayabusa\)
   -  NOTE: You will need to run the !!ToolSync module (now included in the rapid triage script) or launch Gkape and click the "sync with github" button at the bottom before running the script!
 
+"Invoke-KAPE" PowerShell Script (download and copy to the root of your KAPE directory, e.g. C:\Tools\KAPE)
+-  Invoke-KAPE: https://github.com/swisscom/Invoke-Forensics/blob/main/Invoke-Kape.ps1
 Custom EvtxECmd Module:
 
 NOTE: I originally failed to alter the module ID and have updated the !EvtxECmd-Triage.mkape module in this repo to address that issue!
@@ -122,7 +124,7 @@ If you chose "AWS Bucket" collector, a log file will be created in the directory
 ----------------
 
 ## Using KAPE and Invoke-KAPE to Parse Offline Triage Collection
-Stage your ZIP file/s and edit the Kape_Rapid_Triage_Excel_Rev2.ps1 script to match your drive and folder structure:
+Stage your ZIP file/s and edit the Kape_Rapid_Triage_Excel script to match your drive and folder structure:
 
 I use an EC2 Windows 2022 instance, creating an OS Volume (C: - 120 GB) and a Case/Data Volume (D: - 1 to 2 TB, mostly for IOPs but also to accommodate numerous collections).
 I'll then create a "case folder," eg D:\cases\2023-11-1-abc, with a "triage_data" subdirectory, and copy one or more ZIP files into that subdirectory. 

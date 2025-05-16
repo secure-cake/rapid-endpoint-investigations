@@ -1,3 +1,5 @@
+## Wiki
+Check out the Wiki for some related, misc items: [HERE](https://github.com/secure-cake/rapid-endpoint-investigations/wiki)<br />
 ## Linux Endpoint Investigation Components
 Velociraptor Offline Collector with CatScale for Linux walk-through: [HERE](https://github.com/secure-cake/malware-investigations/wiki/Velociraptor-Offline-Collector-with-CatScale-for-Linux)<br />
 Links to CatScale and UAC (Unix-Like Artifact Collector): [HERE](https://github.com/secure-cake/malware-investigations/wiki)

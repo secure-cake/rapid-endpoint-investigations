@@ -1,6 +1,6 @@
 name: Windows.Hash.Executable.Files
 description: |
-IMPORTANT: If PowerShell script logging is enabled (not enabled by default!), this will likely stomp PowerShell EVTX audit logs. This artifact is designed to acquire SHA1 hash values and path/filenames for "executable" files (exe, bat, ps1, json, dll, vbs, cmd, scr) "recently" modified (days configurable) in the most common, user-writeable Windows directories, looking for "abnormal/malicious" executable content.
+  IMPORTANT: If PowerShell script logging is enabled (not enabled by default!), this will likely stomp PowerShell EVTX audit logs. This artifact is designed to acquire SHA1 hash values and path/filenames for "executable" files (exe, bat, ps1, json, dll, vbs, cmd, scr) "recently" modified (days configurable) in the most common, user-writeable Windows directories, looking for "abnormal/malicious" executable content.
 
 required_permissions:
   - EXECVE

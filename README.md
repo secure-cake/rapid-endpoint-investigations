@@ -141,8 +141,8 @@ NOTE: I use Visual Studio Code to open/edit/run the Script
       - eg C:\Tools\KAPE
   2.  Edit the case directory variables:
       - $casename = '2023-11-1-abc'
-      - $triage_data_directory = "D:\cases\$casename\triage_data"
-      - $kape_destination_directory = "D:\cases\$casename\kape_output"
+      - $triage_data_directory = "D:\cases\\$casename\triage_data"
+      - $kape_destination_directory = "D:\cases\\$casename\kape_output"
   3.  Edit the EVTX triage variables:
       - $startdate = '2023-11-01'
       - $includedevents = (add/delete as desired!)

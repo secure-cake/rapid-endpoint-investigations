@@ -23,7 +23,7 @@ $csvf = "evtx-triage-output.csv"
 #if prompted to save in Excel, click don't save
 (get-childitem -Directory $triage_data_directory).name | ForEach-Object {
     #Performs browser data, artifacts of execution, rolled up into Excel web-execution artifacts
-    Invoke-Kape -msource $triage_data_directory\$_\uploads\auto\C%3A -mdest $kape_destination_directory\$_ -Module ObsidianForensics_Hindsight,NirSoft_BrowsingHistoryView,NirSoft_WebBrowserDownloads,AppCompatCacheParser,PECmd,AmcacheParser,SBECmd -mvars csv
+    Invoke-Kape -msource $triage_data_directory\$_\uploads\auto\C%3A -mdest $kape_destination_directory\$_ -Module ObsidianForensics_Hindsight,NirSoft_BrowsingHistoryView,NirSoft_WebBrowserDownloads,AppCompatCacheParser,PECmd,AmcacheParser,SBECmd,LECmd -mvars csv
     #Performs EVTX and Hayabusa Logon Summary EVTX processing...not rolled up into Excel
     Invoke-Kape -msource $triage_data_directory\$_\uploads\auto\C%3A -mdest $kape_destination_directory\$_'-evtx' -Module EvtxECmd -mvars csv
     #Performs EVTX and Hayabusa Summary EVTX processing...rolled up into Excel

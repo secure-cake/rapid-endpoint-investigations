@@ -15,11 +15,11 @@ parameters:
     
   - name: AddFileExtension1
     description: Add a file extension to the default list, include the leading period, example = .vhd
-    default: 
+    default: .vhd
     
   - name: AddFileExtension2
     description: Add a file extension to the default list, include the leading period, example = .xml
-    default: 
+    default: .iso
 
 sources:
   - query: |

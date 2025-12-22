@@ -1,5 +1,5 @@
 ## RTW Script UPDATES
-I've re-worked (and renamed!) the script to update/improve a few things: 
+I've re-worked (and renamed!) the script to update/improve a few things: [rtw-script-rev1](https://github.com/secure-cake/rapid-endpoint-investigations/blob/main/rtw-script-rev1.ps1)
 - Reduces the necessity to review/update variables:
 - -  Now prompts for "case name" input
   -  Defaults to "15 days" prior to current date for EVTX triage processing/output

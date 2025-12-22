@@ -5,7 +5,7 @@ I've re-worked (and renamed!) the script to update/improve a few things: [rtw-sc
   -  Defaults to "15 days" prior to current date for EVTX triage processing/output
 - Removes errors if "D, E, F" MFT files are not present 
 - Improves performance by streamlining EVTX processing
-- Combines "netstat, pslist, dnscache, services, executable-file hashes" to a single Workbook for review/analysis
+- Combines "netstat, pslist, dnscache, services, autoruns, executable-file hashes" to a single Workbook for review/analysis
 - LAST BUT NOT LEAST: Sorts all Worksheets in the "web-exe-evtx" Workbook by date/time automatically!!!
 
 ## Rapid Endpoint Investigations - WIKI

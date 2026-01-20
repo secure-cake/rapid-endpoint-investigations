@@ -14,7 +14,7 @@ read -rp "Confirm execution? (y/n):" confirm_execution
 
 if [[ "$confirm_execution" =~ ^[Yy]$ ]]; then
   cd  uac-3.2.0
-  sudo ./uac -p profiles/full.yaml -o uac-%hostname%-%timestamp% --s3-provider amazon --s3-region bucket_region --s3-bucket $bucket_name --s3-access-key $access_key --s3-secret-key $secret_key ../
+  sudo ./uac -p profiles/full.yaml -o uac-%hostname%-%timestamp% --s3-provider amazon --s3-region $bucket_region --s3-bucket $bucket_name --s3-access-key $access_key --s3-secret-key $secret_key ../
 else
    "Cancelled. Re-run to correct input errors."
 fi

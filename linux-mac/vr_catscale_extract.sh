@@ -1,3 +1,4 @@
+#prerequisites = 7z (sudo apt install p7zip-full)
 #stage your VR collections (zip files) in a directory (triage_data_linux)
 #execute this to extract each zip file to a folder based on filename (host)
 find ./ -name "*.zip" | while read filename; do 

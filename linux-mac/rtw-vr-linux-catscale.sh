@@ -1,3 +1,4 @@
+#prerequisites = 7z (sudo apt install p7zip-full) AND jq (sudo apt install jq)
 #place VR offline collection ZIP files in a diretory, eg "triage_data_linux," then execute this script from that directory
 #unzips collections, then copies/parses key files per host to "triage_data_linux" directory
 find ./ -name "*.zip" | while read filename; do 

@@ -1,3 +1,6 @@
+## RTW Script w/o Excel Requirement [TESTING]
+I've added a new rev utilizing the "ImportExcel" module, to avoid having to install Excel on the Analyst System. The only other change is not including empty CSV output in the final XLSX file rollup (used to include a blank worksheet for a blank CSV input): [rtw-script-rev2](https://github.com/secure-cake/rapid-endpoint-investigations/blob/main/rtw-script-rev2.ps1)
+
 ## RTW Script UPDATES
 I've re-worked (and renamed!) the script to update/improve a few things: [rtw-script-rev1](https://github.com/secure-cake/rapid-endpoint-investigations/blob/main/rtw-script-rev1.ps1)
 - Reduces the necessity to review/update variables:

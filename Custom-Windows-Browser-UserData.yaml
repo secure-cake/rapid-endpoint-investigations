@@ -1,0 +1,81 @@
+name: Custom.Windows.Browser.UserDataDirs
+description: |
+  Finds browser profile directories by their contents rather than their names,
+  so copied or renamed profiles are collected too.
+    - Chromium family (Chrome, Brave, Edge): directories containing "Local State"
+    - Firefox: directories containing "prefs.js"
+  Also collects Firefox profile registries and local cache folders.
+
+parameters:
+  - name: ChromiumMarkerGlobs
+    type: csv
+    default: |
+      Glob
+      C:/Users/*/AppData/Local/Google/**/Local State
+      C:/Users/*/AppData/Local/BraveSoftware/**/Local State
+      C:/Users/*/AppData/Local/Microsoft/Edge*/**/Local State
+  - name: FirefoxMarkerGlobs
+    type: csv
+    default: |
+      Glob
+      C:/Users/*/AppData/Roaming/Mozilla/**/prefs.js
+      C:/Users/*/AppData/Local/Mozilla/**/prefs.js
+  - name: ExtraGlobs
+    type: csv
+    description: Files collected as-is (Firefox registries and cache folders)
+    default: |
+      Glob
+      C:/Users/*/AppData/Roaming/Mozilla/Firefox/*.ini
+      C:/Users/*/AppData/Local/Mozilla/Firefox/Profiles/**
+  - name: MaxFileSize
+    type: int
+    description: Skip files larger than this (bytes)
+    default: 524288000
+  - name: ExcludeRegex
+    description: Optional regex of paths to skip (e.g. cache folders). Empty = collect everything.
+    default: ""
+
+export: |
+  LET chromium_dirs = SELECT "Chromium" AS Family,
+         OSPath.Dirname AS ProfileDir, OSPath AS Marker, Mtime, Btime
+    FROM glob(globs=ChromiumMarkerGlobs.Glob, accessor="auto")
+    WHERE NOT IsDir
+
+  LET firefox_dirs = SELECT "Firefox" AS Family,
+         OSPath.Dirname AS ProfileDir, OSPath AS Marker, Mtime, Btime
+    FROM glob(globs=FirefoxMarkerGlobs.Glob, accessor="auto")
+    WHERE NOT IsDir
+
+  LET all_dirs = SELECT * FROM chain(a=chromium_dirs, b=firefox_dirs)
+
+  LET keep(path) = if(condition=ExcludeRegex,
+                      then=NOT path =~ ExcludeRegex,
+                      else=TRUE)
+
+sources:
+  - name: ProfileDirs
+    query: |
+      SELECT * FROM all_dirs
+
+  - name: Files
+    query: |
+      LET dirs = SELECT Family, ProfileDir FROM all_dirs GROUP BY ProfileDir
+
+      SELECT * FROM foreach(row=dirs, query={
+        SELECT Family, ProfileDir, OSPath, Size, Mtime, Atime, Ctime, Btime,
+               upload(file=OSPath, accessor="auto") AS Upload
+        FROM glob(globs="**", root=ProfileDir, accessor="auto")
+        WHERE NOT IsDir
+          AND Size < MaxFileSize
+          AND keep(path=OSPath)
+      })
+
+  - name: ExtraFiles
+    query: |
+      SELECT OSPath, Size, Mtime, Atime, Ctime, Btime,
+             upload(file=OSPath, accessor="auto") AS Upload
+      FROM glob(globs=ExtraGlobs.Glob, accessor="auto")
+      WHERE NOT IsDir
+        AND Size < MaxFileSize
+        AND keep(path=OSPath)
+        
